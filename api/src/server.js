@@ -1,19 +1,20 @@
-import { createServer } from 'http';
+import { createServer as HttpServer } from 'http';
+import { Server as SocketIO } from "socket.io";
 import app from './app';
 import SocketBootstrap from "./sockets";
-import ChatService from "./services/chat.service";
+import ChatRepository from "./repositories/chat.repository";
 
 // Constants
 const PORT = 3000;
 const HOST = '0.0.0.0';
-
-// Create an Http server
-const httpServer = createServer(app);
-export const io = SocketBootstrap(httpServer, {
+const SOCKET_IO_OPTIONS = {
     cors: {
         origin: '*'
     },
-}, new ChatService());
+};
+// Create an Http server
+const httpServer = HttpServer(app);
+export const io = SocketBootstrap(new SocketIO(httpServer, SOCKET_IO_OPTIONS), new ChatRepository());
 
 // Listen request
 export const server = httpServer.listen(PORT, HOST, () => console.log(`Running on http://${HOST}:${PORT}`));

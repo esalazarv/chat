@@ -1,27 +1,27 @@
-export default (chatService) => {
+export default (chatRepository) => {
     return {
-        search: async (req, resp) => {
-            const chats = await chatService.search();
+        async search(req, resp) {
+            const chats = await chatRepository.search();
             return resp.json(chats);
         },
 
-        find: async (req, resp)  => {
-            const chat = await chatService.find({_id: req.params.id});
+        async find(req, resp) {
+            const chat = await chatRepository.find({_id: req.params.id});
             return resp.json(chat);
         },
 
-        create: async (req, resp) =>{
-            const chat = await chatService.create(req.body);
+        async create (req, resp) {
+            const chat = await chatRepository.create(req.body);
             return resp.json(chat);
         },
 
-        update: async (req, resp) => {
-            const chat = await chatService.update(req.params.id, req.body);
+        async update(req, resp) {
+            const chat = await chatRepository.update(req.params.id, req.body);
             return resp.json(chat);
         },
 
-        delete: async (req, resp) => {
-            await chatService.delete(req.params.id);
+        async delete (req, resp) {
+            await chatRepository.delete(req.params.id);
             return resp.json();
         }
     }

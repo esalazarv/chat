@@ -1,34 +1,28 @@
-import { Server as SocketIO } from "socket.io";
-
-const SocketBootstrap = (httpServer, config, chatService) => {
-    // Create a socket io server
-    const io = new SocketIO(httpServer, config);
+const SocketBootstrap = (io, chatRepository) => {
     // Listen connections
     return io.on('connection', socket => {
         console.log('new connection');
-        chatService.createIfNotExists({ name: 'room:general', alias: 'General', public: true })
-            .then(chat => console.log(`${chat.name} created`))
-            .catch(error => console.log('could not create a chat:', error));
 
-        socket.on('join', ({ room }) => {
+        socket.on('chat.join', ({ room, options }) => {
+            // join to chat
             socket.join(room);
-            console.log('joined to room', room);
-            io.to(room).emit('message', { room, message: 'welcome'});
+            console.log('joined to chat:', room);
+            io.to(room).emit('chat.join.success', { room, message: 'welcome'});
         });
 
-        socket.on('typing:start', ({ room }) => {
-            console.log('start typing');
-            io.to(room).emit('typing:start', { room });
+        socket.on('chat.typing.start', ({ room }) => {
+            console.log('start typing in chat:', room);
+            io.to(room).emit('chat.typing.start', { room });
         });
 
-        socket.on('typing:stop', ({ room }) => {
-            console.log('stop typing');
-            io.to(room).emit('typing:stop', { room });
+        socket.on('chat.typing.stop', ({ room }) => {
+            console.log('stop typing in chat:', room);
+            io.to(room).emit('chat.typing.stop', { room });
         });
 
-        socket.on('send', ({ room, message }) => {
-            console.log('sending message');
-            io.to(room).emit('message', { room, message});
+        socket.on('chat.message', ({ room, message }) => {
+            console.log('sending message in chat:', room);
+            io.to(room).emit('chat.message', { room, message});
         });
     });
 }

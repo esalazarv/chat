@@ -4,7 +4,16 @@ const chatSchema = new Schema(
     {
         name: {
             type: String,
+            unique: true,
             required: true,
+        },
+        alias: {
+            type: String,
+            default: null,
+        },
+        public: {
+            type: Boolean,
+            default: false
         },
         members: [{
             type: Schema.ObjectId,

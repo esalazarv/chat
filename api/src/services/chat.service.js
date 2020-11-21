@@ -9,9 +9,21 @@ export default class ChatService {
         return Chat.findOne({_id: id});
     }
 
+    findByName(name) {
+        return Chat.findOne({name: name});
+    }
+
     create(data) {
         const chat = new Chat(data);
         return chat.save();
+    }
+
+    async createIfNotExists(data) {
+        const chat = await this.findByName(data.name);
+        if (!chat) {
+            return this.create(data);
+        }
+        return chat;
     }
 
     update(id, data) {

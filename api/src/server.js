@@ -1,27 +1,19 @@
-import { Server as HttpServer } from 'http';
-import { Server as SocketIO } from 'socket.io';
+import { createServer } from 'http';
 import app from './app';
-import UserModel from "./models/user.model";
-
-// Create an Http server
-const httpServer = HttpServer(app);
-// Create a socket io server
-const io = new SocketIO(httpServer, {
-    cors: {
-        origin: '*'
-    },
-});
-
-// Listen connections
-io.on('connection', socket => {
-    console.log('connect');
-    // TODO: implement a repository pattern and implement chat channel handlers
-    const user = new UserModel({ nickname: 'test'});
-    //user.save();
-});
+import SocketBootstrap from "./sockets";
+import ChatService from "./services/chat.service";
 
 // Constants
 const PORT = 3000;
 const HOST = '0.0.0.0';
+
+// Create an Http server
+const httpServer = createServer(app);
+export const io = SocketBootstrap(httpServer, {
+    cors: {
+        origin: '*'
+    },
+}, new ChatService());
+
 // Listen request
-httpServer.listen(PORT, HOST, () => console.log(`Running on http://${HOST}:${PORT}`));
+export const server = httpServer.listen(PORT, HOST, () => console.log(`Running on http://${HOST}:${PORT}`));

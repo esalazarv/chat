@@ -10,4 +10,10 @@
 <body>
   <app-root></app-root>
 </body>
+<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    var socket = io('http://localhost:3000');
+  })
+</script>
 </html>

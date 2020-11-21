@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
     {
-        username: {
+        nickname: {
             type: String,
             unique: true,
             required: true,

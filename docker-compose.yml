@@ -1,0 +1,46 @@
+version: "3.7"
+
+networks:
+  internal:
+    driver: "bridge"
+  external:
+    name: chat-api
+    driver: "bridge"
+
+volumes:
+  database:
+    driver: "local"
+
+services:
+  api:
+    build: ./api
+    networks:
+      - internal
+      - external
+    ports:
+      - "${DOCKER_API_PORT:-3000}:3000"
+    volumes:
+      - ./api:/var/www/api
+      - /var/www/api/node_modules
+    restart: always
+
+  web:
+    build: ./web
+    networks:
+      - internal
+    ports:
+      - "${DOCKER_PWA_PORT:-4200}:4200"
+    volumes:
+      - ./web:/var/www/web
+      - /var/www/web/node_modules
+    restart: always
+
+  mongo:
+    image: mongo
+    volumes:
+      - database:/data/db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DOCKER_MONGO_INITDB_ROOT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${DOCKER_MONGO_INITDB_ROOT_PASSWORD:-password}
+

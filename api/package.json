@@ -1,0 +1,17 @@
+{
+  "name": "chat-api",
+  "version": "1.0.0",
+  "description": "Chat api with Node.js on Docker",
+  "author": "First Last <eduardosalazar89@hotmail.es>",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "start:prod": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

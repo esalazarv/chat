@@ -1,0 +1,7 @@
+.idea
+.vscode
+.Ds_Store
+
+
+# project files
+.env

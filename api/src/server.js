@@ -1,6 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server as SocketIO } from 'socket.io';
 import app from './app';
+import User from "./models/user";
 
 // Create an Http server
 const httpServer = HttpServer(app);
@@ -14,6 +15,9 @@ const io = new SocketIO(httpServer, {
 // Listen connections
 io.on('connection', socket => {
     console.log('connect');
+    // TODO: implement a repository pattern and implement chat channel handlers
+    const user = new User({ username: 'test'});
+    user.save();
 });
 
 // Constants

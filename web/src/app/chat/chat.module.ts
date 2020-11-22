@@ -5,15 +5,19 @@ import { SocketIoService } from "../socket/socket-io.service";
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ChatService } from "./chat.service";
 import { MaterialModule } from "../material/material.module";
+import { WelcomeDialogComponent } from "./components/welcome-dialog/welcome-dialog.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 
 
 @NgModule({
-  declarations: [ChatListComponent],
+  declarations: [ChatListComponent, WelcomeDialogComponent],
   imports: [
     CommonModule,
     AvatarModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     ChatService

@@ -11,8 +11,9 @@
       <button mat-icon-button mat-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>My App</span>
+      <span>{{ title }}</span>
       <span class="spacer"></span>
+      {{ ($user | async)?.nickname }}
       <button mat-icon-button>
         <mat-icon>more_vert</mat-icon>
       </button>

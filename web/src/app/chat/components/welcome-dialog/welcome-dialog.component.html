@@ -1,0 +1,12 @@
+<div class="welcome-dialog-container">
+    <h3>Welcome to StratPlus chat</h3>
+    <div class="avatar-container">
+      <ngx-avatar [name]="nickname"></ngx-avatar>
+    </div>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Type a nickname" [(ngModel)]="nickname">
+      <mat-label>nickname</mat-label>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="join-btn">join to chat</button>
+</div>
+

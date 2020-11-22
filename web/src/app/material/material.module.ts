@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from "@angular/material/card";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MatCardModule } from "@angular/material/card";
   exports: [
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,

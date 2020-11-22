@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { MaterialModule } from "./material/material.module";
+import { SocketModule } from "./socket/socket.module";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MaterialModule } from "./material/material.module";
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SocketModule.forRoot({ url: 'http://localhost:3000' }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

@@ -7,6 +7,12 @@
   .main-sidenav {
     width: 300px;
     border-right: none;
+
+    .sidenav-toolbar {
+      width: 300px;
+      position: fixed;
+      z-index: 10;
+    }
   }
 
   .main-content {

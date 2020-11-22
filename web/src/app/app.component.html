@@ -1,9 +1,9 @@
 <mat-drawer-container class="main-container" autosize>
   <mat-drawer #drawer class="main-sidenav" mode="side">
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="sidenav-toolbar">
       <span>Chats</span>
     </mat-toolbar>
-    <router-outlet></router-outlet>
+    <app-chat-list></app-chat-list>
   </mat-drawer>
 
   <div class="main-content">
@@ -17,7 +17,9 @@
         <mat-icon>more_vert</mat-icon>
       </button>
     </mat-toolbar>
-    <div class="message-container"></div>
+    <div class="message-container">
+      <router-outlet></router-outlet>
+    </div>
     <div class="chat-input-field-container">
       <mat-form-field appearance="outline">
         <input matInput placeholder="Type a message">

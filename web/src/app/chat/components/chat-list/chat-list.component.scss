@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+
+.cat-list {
+  padding-top: _mat-density-prop-value($mat-toolbar-desktop-density-config, 0, height);
+  @media ($mat-xsmall) {
+    padding-top: _mat-density-prop-value($mat-toolbar-mobile-density-config, 0, height);
+  }
+}
+.chat-card {
+  border-bottom: solid 1px lightgray;
+  .mat-card-subtitle {
+    margin-bottom: 0;
+  }
+}

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import ChatController from "../controllers/chat.controller";
-import ChatRepository from "../repositories/chat.repository";
+import UserController from "../controllers/user.controller";
+import UserRepository from "../repositories/user.repository";
 
 const router = Router();
-const controller = ChatController(new ChatRepository());
+const controller = UserController(new UserRepository());
 router.get('/', controller.search);
 router.post('/', controller.create);
 router.get('/:id', controller.find);

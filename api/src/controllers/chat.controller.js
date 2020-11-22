@@ -1,4 +1,4 @@
-export default (chatRepository) => {
+const ChatRepository = (chatRepository) => {
     return {
         async search(req, resp) {
             const chats = await chatRepository.search();
@@ -26,3 +26,5 @@ export default (chatRepository) => {
         }
     }
 }
+
+export default ChatRepository;

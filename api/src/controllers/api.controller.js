@@ -1,4 +1,4 @@
-export default () => {
+ const ApiRepository = () => {
     return {
         info(req, res) {
             return res.json({
@@ -7,4 +7,6 @@ export default () => {
             });
         },
     }
-}
+};
+
+ export default ApiRepository;

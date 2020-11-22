@@ -1,7 +1,7 @@
-const ChatRepository = (chatRepository) => {
+const ChatController = (chatRepository) => {
     return {
         async search(req, resp) {
-            const chats = await chatRepository.search();
+            const chats = await chatRepository.search(req.query);
             return resp.json(chats);
         },
 
@@ -27,4 +27,4 @@ const ChatRepository = (chatRepository) => {
     }
 }
 
-export default ChatRepository;
+export default ChatController;

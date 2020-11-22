@@ -5,22 +5,39 @@ const SocketBootstrap = (io, chatRepository, userRepository) => {
 
         socket.on('chat.sign-in', async (payload) => {
             userRepository.createIfNotExists(payload).then(user => {
+                console.log(`try sign in user ${user._id}  `);
                 io.emit('chat.sign-in.success', { message: user });
-                console.log('signed in to chat:', user);
+                console.log(`user ${user._id} signed in successfully `);
+
+                // Search chats
+                chatRepository.search().then(chats => chats.forEach(chat => {
+                    console.log(`try join user ${user._id} to chat ${chat._id}`);
+                    chatRepository.attachUser(chat._id, user._id);
+                    socket.join(chat._id); // join to each chat using the id for the name
+                    console.log(`user ${user._id} joined to chat ${chat._id}`);
+                }));
+
             }).catch(error => {
                 io.emit('chat.sign-in.error', { message: error });
-                console.log('error signing in to chat:', error);
+                console.log('error signing user in to chat:', error);
             });
         });
 
         socket.on('chat.sign-out', async (payload) => {
-            userRepository.delete(payload._id).then(result => {
-                io.emit('chat.sign-out.success', { message: result });
-                console.log('signed out to chat:', result);
-            }).catch(error => {
-                io.emit('chat.sign-in.error', { message: error });
-                console.log('error signing out to chat:', error);
-            });
+
+            // Search default chats
+            chatRepository.search()
+                .then(chats => chats.forEach(chat => {
+                    socket.leave(chat._id); // leave to each chat using the id for the name
+                    console.log('user leave chat', chat._id);
+                }))
+                .catch(error => {
+                    console.log('error signing out to chat:', error);
+                    io.emit('chat.sign-out.error', { message: error });
+                });
+
+            io.emit('chat.sign-out.success', { message: payload });
+            console.log('signed out to chat:', payload);
         });
 
         socket.on('chat.join', ({ room, options }) => {

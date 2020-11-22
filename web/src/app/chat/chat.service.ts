@@ -11,8 +11,13 @@ export class ChatService {
 
   constructor(private http: HttpClient) { }
 
-  all():Observable<any[]> {
+  all():Observable<Chat[]> {
     console.log("get all services");
     return this.http.get<Chat[]>(`${environment.api}/chats`);
+  }
+
+  search(params: {}):Observable<Chat[]> {
+    console.log("get all services");
+    return this.http.get<Chat[]>(`${environment.api}/chats`, { params });
   }
 }

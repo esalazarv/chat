@@ -2,8 +2,16 @@ import Chat from "../models/chat.model";
 
 const ChatRepository = () => {
     return {
-        search() {
-            return Chat.find();
+        search(query = {}) {
+            let filters = {};
+            let $or = [{ public: true }, { default: true }];
+            if (Object.keys(query).includes('user_id')) {
+                $or.push({ members : query.user_id });
+            }
+            if ($or.length) {
+                filters.$or = $or;
+            }
+            return Chat.aggregate([{ $match: filters }]);
         },
 
         find(id) {
@@ -33,6 +41,18 @@ const ChatRepository = () => {
 
         delete(id) {
             return Chat.findOneAndDelete({_id: id});
+        },
+
+        async attachUser(chatId, userId) {
+            const chat = await this.find(chatId);
+            chat.members.addToSet(userId);
+            return chat.save();
+        },
+
+        async detachUser(chatId, userId) {
+            const chat = await this.find(chatId);
+            chat.members.pull({ _id: userId });
+            return chat.save();
         },
     }
 }

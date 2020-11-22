@@ -3,6 +3,11 @@ const SocketBootstrap = (io, chatRepository) => {
     return io.on('connection', socket => {
         console.log('new connection');
 
+        socket.on('chat.sign-in', (user) => {
+            console.log('signed in to chat:', user);
+            io.emit('chat.sign-in.success', { message: user });
+        });
+
         socket.on('chat.join', ({ room, options }) => {
             // join to chat
             socket.join(room);

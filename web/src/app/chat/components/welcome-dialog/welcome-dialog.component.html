@@ -1,12 +1,15 @@
-<div class="welcome-dialog-container">
-    <h3>Welcome to StratPlus chat</h3>
+<div class="welcome-dialog-container" [ngClass]="{'shake': shakeIt}">
+  <form [formGroup]="form">
+    <h3>Welcome to <strong>StratPlus</strong> chat</h3>
     <div class="avatar-container">
-      <ngx-avatar [name]="nickname"></ngx-avatar>
+      <ngx-avatar [name]="form.get('nickname')?.value"></ngx-avatar>
     </div>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Type a nickname" [(ngModel)]="nickname">
+      <input matInput placeholder="Type a nickname" formControlName="nickname">
       <mat-label>nickname</mat-label>
+      <mat-hint>8 characters at least</mat-hint>
     </mat-form-field>
-    <button mat-flat-button color="primary" class="join-btn">join to chat</button>
+    <button mat-flat-button color="primary" (click)="join()" [disabled]="form.invalid" class="join-btn">join to chat</button>
+  </form>
 </div>
 

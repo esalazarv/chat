@@ -14,9 +14,15 @@
       <span>{{ title }}</span>
       <span class="spacer"></span>
       {{ ($user | async)?.nickname }}
-      <button mat-icon-button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="signOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          kill session
+        </button>
+      </mat-menu>
     </mat-toolbar>
     <div class="message-container">
       <router-outlet></router-outlet>

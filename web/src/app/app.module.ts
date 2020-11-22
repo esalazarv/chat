@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { MaterialModule } from "./material/material.module";
 import { SocketModule } from "./socket/socket.module";
 import { ChatModule } from "./chat/chat.module";
-import store from "./app.store";
+import store , { metaReducers }from "./app.store";
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import store from "./app.store";
     ReactiveFormsModule,
     SocketModule.forRoot({ url: 'http://localhost:3000' }),
     ChatModule,
-    StoreModule.forRoot(store),
+    StoreModule.forRoot(store, { metaReducers }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

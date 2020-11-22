@@ -13,6 +13,16 @@ const SocketBootstrap = (io, chatRepository, userRepository) => {
             });
         });
 
+        socket.on('chat.sign-out', async (payload) => {
+            userRepository.delete(payload._id).then(result => {
+                io.emit('chat.sign-out.success', { message: result });
+                console.log('signed out to chat:', result);
+            }).catch(error => {
+                io.emit('chat.sign-in.error', { message: error });
+                console.log('error signing out to chat:', error);
+            });
+        });
+
         socket.on('chat.join', ({ room, options }) => {
             // join to chat
             socket.join(room);

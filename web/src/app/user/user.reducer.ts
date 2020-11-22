@@ -1,5 +1,5 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import { setUser, reset } from './user.actions';
+import { setUser, resetUser } from './user.actions';
 import { User } from "./user";
 
 export const initialState: User = {
@@ -12,7 +12,7 @@ export const initialState: User = {
 const _reducer = createReducer(
   initialState,
   on(setUser, (state,  user: User) =>  ({ ...state, ...user})),
-  on(reset, (state) =>  ({...initialState}))
+  on(resetUser, (state) =>  ({...initialState}))
 );
 
 export function userReducer(state: any, action: Action) {

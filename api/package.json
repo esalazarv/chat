@@ -7,12 +7,16 @@
   "scripts": {
     "build": "babel src/server.js --out-file dist/index.js --minified --presets @babel/preset-env",
     "start": "nodemon --exec babel-node src/server.js",
-    "start:prod": "npm run build && node dist/index.js"
+    "start:prod": "npm run build && node dist/index.js",
+    "seeder:init": "md-seed init",
+    "seeder:generate": "md-seed g",
+    "seeder:run": "md-seed run"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.1",
     "mongoose": "^5.10.15",
+    "mongoose-data-seed": "^2.1.6",
     "socket.io": "^3.0.3"
   },
   "devDependencies": {
@@ -21,5 +25,8 @@
     "@babel/node": "^7.12.6",
     "@babel/preset-env": "^7.12.7",
     "nodemon": "^2.0.6"
+  },
+  "mdSeed": {
+    "seedersFolder": "./src/seeders"
   }
 }

@@ -11,7 +11,7 @@ const ChatRepository = () => {
         },
 
         findByName(name) {
-            return Chat.findOne({name: name});
+            return Chat.findOne({name});
         },
 
         create(data) {

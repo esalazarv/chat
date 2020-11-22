@@ -47,7 +47,8 @@ export class WelcomeDialogComponent implements OnInit{
    */
   onSuccess(payload: SocketMessage<User>) {
     // update store
-    this.store.dispatch(setUser(payload.message));
+    const user = payload.message;
+    this.store.dispatch(setUser(user));
     this.dialogRef.close();
   }
 

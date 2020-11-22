@@ -1,11 +1,16 @@
-const SocketBootstrap = (io, chatRepository) => {
+const SocketBootstrap = (io, chatRepository, userRepository) => {
     // Listen connections
     return io.on('connection', socket => {
         console.log('new connection');
 
-        socket.on('chat.sign-in', (user) => {
-            console.log('signed in to chat:', user);
-            io.emit('chat.sign-in.success', { message: user });
+        socket.on('chat.sign-in', async (payload) => {
+            userRepository.createIfNotExists(payload).then(user => {
+                io.emit('chat.sign-in.success', { message: user });
+                console.log('signed in to chat:', user);
+            }).catch(error => {
+                io.emit('chat.sign-in.error', { message: error });
+                console.log('error signing in to chat:', error);
+            });
         });
 
         socket.on('chat.join', ({ room, options }) => {

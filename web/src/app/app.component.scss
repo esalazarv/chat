@@ -1,0 +1,65 @@
+::ng-deep .mat-drawer-content {
+  overflow: initial!important;
+}
+.main-container {
+  height: 100vh;
+
+  .main-sidenav {
+    width: 300px;
+    border-right: none;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .chat-toolbar {
+      display: flex;
+      flex-direction: row;
+
+      .spacer {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+
+    .message-container {
+      box-sizing: border-box;
+      display: flex;
+      flex-grow: 1;
+    }
+
+    .chat-input-field-container {
+      background: #E8EAF6;
+      border-top: solid 4px #C5CAE9;
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+
+      .chat-actions-container {
+        padding-left: 10px;
+      }
+
+      ::ng-deep {
+        mat-form-field {
+          display: flex;
+          flex-grow: 1;
+        }
+        .mat-form-field-wrapper {
+          width: 100%;
+          margin: 0 0 -1.25em;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+          background-color: white;
+          border-radius: 50px;
+        }
+        .mat-form-field-outline-start,
+        .mat-form-field-outline-gap,
+        .mat-form-field-outline-end {
+          border-color: transparent;
+        }
+      }
+    }
+  }
+}

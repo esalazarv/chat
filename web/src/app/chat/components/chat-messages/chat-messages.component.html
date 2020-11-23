@@ -1,1 +1,16 @@
-<p>chat-messages works!</p>
+<section class="conversation">
+  <div class="message-wrapper" *ngFor="let message of ($chat | async)?.messages; index as i;">
+    <div class="message-avatar-container">
+      <ngx-avatar mat-card-avatar [size]="40" [name]="message.sender!.nickname"></ngx-avatar>
+    </div>
+    <mat-card class="mat-card-flat message">
+      <mat-card-subtitle>
+        {{ message.sender!.nickname }}
+      </mat-card-subtitle>
+      <mat-card-content>
+        {{ message.content }}
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+

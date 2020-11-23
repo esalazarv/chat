@@ -11,7 +11,7 @@ export interface Chat {
   alias: string;
   public: boolean;
   members: User[],
-  messages: Message[],
+  messages: Message<User>[],
   name: string,
   createdAt: string,
   updatedAt: string,

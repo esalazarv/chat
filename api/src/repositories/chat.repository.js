@@ -11,7 +11,11 @@ const ChatRepository = () => {
             if ($or.length) {
                 filters.$or = $or;
             }
-            return Chat.aggregate([{ $match: filters }]);
+
+            return Chat.find(filters).populate({
+                path: 'messages',
+                populate:  { path: 'sender' }
+            });
         },
 
         find(id) {

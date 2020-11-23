@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketIoService } from "../../../socket/socket-io.service";
 import { SocketMessage } from "../../socket-message";
-import {Store} from "@ngrx/store";
-import {AppState} from "../../../app.store";
-import {appendMessage} from "../../chat.actions";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../app.store";
+import { appendMessage } from "../../chat.actions";
+import { Observable } from "rxjs";
+import { Chat } from "../../chat";
 
 @Component({
   selector: 'app-chat-messages',
@@ -12,7 +14,10 @@ import {appendMessage} from "../../chat.actions";
 })
 export class ChatMessagesComponent implements OnInit {
 
-  constructor(private socket: SocketIoService, private store: Store<AppState>) { }
+  $chat!: Observable<Chat | null>;
+  constructor(private socket: SocketIoService, private store: Store<AppState>) {
+    this.$chat = this.store.select(state => state.chat.current);
+  }
 
   ngOnInit(): void {
     console.log("listen messages from server")

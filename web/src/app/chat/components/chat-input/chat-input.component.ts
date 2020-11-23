@@ -56,8 +56,8 @@ export class ChatInputComponent implements OnInit {
       if (chat && user) {
         const room = chat._id;
         const content = this.form.get('message')?.value;
-        const message: Message = { chat: chat._id, content, sender: user._id };
-        this.socket.io.emit("chat.message", { room, message, user: user._id });
+        const message: Message<User> = { chat: chat._id, content, sender: user };
+        this.socket.io.emit("chat.message", { room, message });
         this.form.reset();
       }
     });

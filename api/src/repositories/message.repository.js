@@ -12,7 +12,7 @@ const MessageRepository = () => {
 
         create(data) {
             const message = new Message(data);
-            return message.save();
+            return message.save().then(message => message.populate({path: 'sender', populate: 'receiver'}).execPopulate());
         },
 
         update(id, data) {

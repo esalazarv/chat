@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { setChatList, selectChat, appendMessage, resetChatState } from './chat.actions';
 import { Chat, ChatCollection } from "./chat";
 import { Message } from "./message";
+import { User } from "../user/user";
 
 export interface ChatState {
   list: Chat[];
@@ -17,7 +18,7 @@ const _reducer = createReducer(
   initialState,
   on(setChatList, (state,  payload: ChatCollection) =>  ({ ...state, list: payload.list})),
   on(selectChat, (state, payload: Chat) =>  ({...state, current: payload})),
-  on(appendMessage, (state, payload: { chatId: string, message: Message }) => {
+  on(appendMessage, (state, payload: { chatId: string, message: Message<User> }) => {
     let chat = state.list.find(item => item._id == payload.chatId);
     if (chat) {
       const index = state.list.indexOf(chat);

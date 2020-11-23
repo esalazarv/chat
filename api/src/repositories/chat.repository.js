@@ -12,10 +12,13 @@ const ChatRepository = () => {
                 filters.$or = $or;
             }
 
-            return Chat.find(filters).populate({
-                path: 'messages',
-                populate:  { path: 'sender' }
-            });
+            return Chat.find(filters)
+                .populate({
+                    path: 'messages',
+                    populate:  {
+                        path: 'sender',
+                    },
+                }).populate( { path: 'members' });
         },
 
         find(id) {
@@ -50,7 +53,7 @@ const ChatRepository = () => {
         async attachUser(chatId, userId) {
             const chat = await this.find(chatId);
             chat.members.addToSet(userId);
-            return chat.save();
+            return chat.save().then(chat => chat.populate({path: 'members', populate: 'messages'}).execPopulate());
         },
 
         async detachUser(chatId, userId) {

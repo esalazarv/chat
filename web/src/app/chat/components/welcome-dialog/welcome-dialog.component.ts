@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+import { uniqueNamesGenerator, NumberDictionary, colors, animals } from 'unique-names-generator';
 import { SocketIoService } from "../../../socket/socket-io.service";
 import { User } from "../../../user/user";
 import { Store } from "@ngrx/store";
@@ -70,8 +70,9 @@ export class WelcomeDialogComponent implements OnInit{
    */
   generateNickname(): string {
     return uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals],
-      separator: '-'
+      dictionaries: [colors, animals, NumberDictionary.generate({min:1, max: 99, length: 2})],
+      separator: '',
+      style: "capital"
     });
   }
 

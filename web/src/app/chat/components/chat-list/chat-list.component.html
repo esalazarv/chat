@@ -5,10 +5,17 @@
     (click)="selectChat(item)"
     [ngClass]="{'active': ($chat | async)?._id == item._id }"
   >
-    <mat-card-header>
+    <mat-card-header *ngIf="item.public; else privateChat">
       <ngx-avatar mat-card-avatar [size]="40" [name]="item.alias"></ngx-avatar>
       <mat-card-title>{{ item.alias }}</mat-card-title>
       <mat-card-subtitle>{{ item.members.length }} members</mat-card-subtitle>
     </mat-card-header>
+    <ng-template #privateChat>
+      <mat-card-header>
+        <ngx-avatar mat-card-avatar [size]="40" [name]="getPrivateAlias(item)"></ngx-avatar>
+        <mat-card-title>{{ getPrivateAlias(item) }}</mat-card-title>
+        <mat-card-subtitle>{{ item.members.length }} members</mat-card-subtitle>
+      </mat-card-header>
+    </ng-template>
   </mat-card>
 </div>

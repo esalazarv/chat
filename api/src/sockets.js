@@ -48,6 +48,19 @@ const SocketBootstrap = (io, chatRepository, userRepository, messageRepository) 
             console.log('signed out to chat:', payload);
         });
 
+        socket.on('chat.create.room', ({ room, members }) => {
+            chatRepository.createIfNotExists(room).then(chat => {
+                // join to chat
+                socket.join(chat.name);
+                members.forEach(member =>  {
+                    console.log('joined to chat:', chat.name);
+                    chatRepository.attachUser(chat._id, member._id);
+                    socket.emit(`chat.joined.success`, { message: member });
+                });
+            });
+            //
+        });
+
         socket.on('chat.join', ({ room, options }) => {
             // join to chat
             socket.join(room);

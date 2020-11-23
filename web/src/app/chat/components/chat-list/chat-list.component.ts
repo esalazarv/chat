@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from "../../chat.service";
 import { SocketIoService } from "../../../socket/socket-io.service";
-import { combineLatest, Observable } from "rxjs";
+import { combineLatest, from, Observable } from "rxjs";
 import { Chat } from "../../chat";
 import { User } from "../../../user/user";
 import { Store } from "@ngrx/store";
@@ -69,5 +69,10 @@ export class ChatListComponent implements OnInit {
 
   selectChat(chat: Chat) {
     this.store.dispatch(selectChat(chat));
+  }
+
+  getPrivateAlias(chat: Chat) {
+    const [host, user] = chat.members;
+    return user.nickname;
   }
 }

@@ -4,11 +4,25 @@
        [ngClass]="{'sent': ($user | async)?._id == message.sender!._id }"
   >
     <div class="message-avatar-container">
-      <ngx-avatar mat-card-avatar [size]="40" [name]="message.sender!.nickname"></ngx-avatar>
+      <ngx-avatar mat-card-avatar [size]="40" [name]="message.sender!.nickname" *ngIf="($user | async)?._id == message.sender!._id; else actionableAvatar"></ngx-avatar>
+      <ng-template #actionableAvatar>
+        <ngx-avatar mat-card-avatar [size]="40" [name]="message.sender!.nickname" [matMenuTriggerFor]="menuAvatar"></ngx-avatar>
+        <mat-menu #menuAvatar="matMenu">
+          <div mat-menu-item [disableRipple]="true" [disabled]="true">
+            <mat-card-subtitle>
+              {{ message.sender!.nickname }}
+            </mat-card-subtitle>
+          </div>
+          <button mat-menu-item *ngIf="($chat | async)?.public === true" (click)="startPrivateChat(message.sender!)">
+            <mat-icon>message</mat-icon>
+            start a private chat
+          </button>
+        </mat-menu>
+      </ng-template>
     </div>
     <mat-card class="mat-card-flat message">
       <mat-card-subtitle>
-        {{ message.sender!.nickname }}
+        <small>{{ message.sender!.nickname }}</small>
       </mat-card-subtitle>
       <mat-card-content>
         {{ message.content }}

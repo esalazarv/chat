@@ -14,12 +14,14 @@ import { MaterialModule } from "./material/material.module";
 import { SocketModule } from "./socket/socket.module";
 import { ChatModule } from "./chat/chat.module";
 import store , { metaReducers }from "./app.store";
+import {AvatarModule} from "ngx-avatar";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    AvatarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -5,5 +5,6 @@ import {User} from "../user/user";
 
 export const setChatList = createAction('[Chat] set chat list', props<ChatCollection>());
 export const selectChat = createAction('[Chat] select chat data', props<Chat>());
+export const appendChat = createAction('[Chat] append chat to list', props<Chat>());
 export const appendMessage = createAction('[Chat] append chat message', props<{ chatId: any, message: Message<User>}>())
 export const resetChatState = createAction('[Chat] reset chat data');

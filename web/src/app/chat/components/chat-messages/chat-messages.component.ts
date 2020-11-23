@@ -3,10 +3,12 @@ import { SocketIoService } from "../../../socket/socket-io.service";
 import { SocketMessage } from "../../socket-message";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../app.store";
-import { appendMessage } from "../../chat.actions";
+import {appendChat, appendMessage, setChatList} from "../../chat.actions";
 import { Observable } from "rxjs";
 import { Chat } from "../../chat";
 import { User } from "../../../user/user";
+import {tap} from "rxjs/operators";
+import {ChatService} from "../../chat.service";
 
 @Component({
   selector: 'app-chat-messages',
@@ -20,9 +22,9 @@ export class ChatMessagesComponent implements OnInit {
   constructor(
     public element: ElementRef,
     private socket: SocketIoService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private chatService: ChatService,
   ) {
-    console.log(element.nativeElement);
     this.$user = this.store.select(state => state.user);
     this.$chat = this.store.select(state => state.chat.current);
   }
@@ -31,6 +33,7 @@ export class ChatMessagesComponent implements OnInit {
     console.log("listen messages from server")
     this.socket.io.on("chat.message", this.handleIncomingMessage.bind(this));
     this.socket.io.on('connect', this.scrollToBottom.bind(this));
+    this.$user.subscribe(user => this.socket.io.on( `chat.joined.success`, this.handleRequestJoin.bind(this)));
   }
 
   /**
@@ -49,6 +52,25 @@ export class ChatMessagesComponent implements OnInit {
       top: this.element.nativeElement.scrollHeight,
       left: 0,
       behavior: 'smooth'
+    });
+  }
+
+  /**
+   * This create a new chat with the selected user
+   */
+  startPrivateChat(user: User) {
+    this.$user.subscribe(host => {
+      const name = [host!._id, user!._id].sort((a, b) => a!.localeCompare(b!)).join(':');
+      const alias = `${user.nickname}/${host!.nickname}`;
+      const room = {name, alias};
+      const members = [host, user];
+      this.socket.io.emit("chat.create.room", { room, members });
+    });
+  }
+
+  handleRequestJoin(payload: SocketMessage<Chat>) {
+    this.$user.subscribe(user => {
+      this.chatService.search({ user_id: user!._id}).subscribe(list => this.store.dispatch(setChatList({ list })));
     });
   }
 }

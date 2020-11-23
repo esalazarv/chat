@@ -18,15 +18,17 @@ import { Chat } from "./chat/chat";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'chat';
+  $title: Observable<string | null>;
   $user: Observable<User>;
   $chat: Observable<Chat | null>;
+  opened: boolean = true;
 
   constructor(
     private store: Store<AppState>,
     private dialog: MatDialog,
     private socket: SocketIoService,
   ) {
+    this.$title = this.store.select(state => state.chat.title);
     this.$chat = this.store.select(state => state.chat.current);
     this.$user = this.store.select((state) => state.user);
   }

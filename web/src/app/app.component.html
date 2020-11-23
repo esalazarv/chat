@@ -1,5 +1,5 @@
 <mat-drawer-container class="main-container" autosize>
-  <mat-drawer #drawer class="main-sidenav" mode="side">
+  <mat-drawer #drawer class="main-sidenav" mode="side" [(opened)]="opened">
     <mat-toolbar color="primary" class="sidenav-toolbar">
       <span>Chats</span>
     </mat-toolbar>
@@ -11,13 +11,16 @@
       <button mat-icon-button mat-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>{{ ($chat | async)?.alias }}</span>
+      <span>{{ ($title | async) }}</span>
       <span class="spacer"></span>
-      {{ ($user | async)?.nickname }}
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+      <ngx-avatar class="avatar" [name]="($user | async)!.nickname" [matMenuTriggerFor]="menu"></ngx-avatar>
       <mat-menu #menu="matMenu">
+        <div mat-menu-item [disableRipple]="true" [disabled]="true">
+          <mat-card-subtitle>
+            <mat-icon>account_circle</mat-icon>
+            {{ ($user | async)?.nickname }}
+          </mat-card-subtitle>
+        </div>
         <button mat-menu-item (click)="signOut()">
           <mat-icon>power_settings_new</mat-icon>
           kill session

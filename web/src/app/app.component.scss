@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 ::ng-deep .mat-drawer-content {
   overflow: initial!important;
 }
@@ -20,19 +22,29 @@
     flex-direction: column;
     height: 100vh;
 
+
     .chat-toolbar {
       display: flex;
       flex-direction: row;
+      min-height: $mat-toolbar-height-desktop;
+      @media ($mat-xsmall) {
+        min-height: $mat-toolbar-height-mobile;
+      }
 
       .spacer {
         display: flex;
         flex-grow: 1;
+      }
+
+      .avatar {
+        cursor: pointer;
       }
     }
 
     .message-container {
       box-sizing: border-box;
       padding-bottom: 15px;
+      flex-grow: 1;
       overflow: scroll;
     }
   }

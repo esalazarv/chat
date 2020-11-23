@@ -19,16 +19,7 @@ export const initialState: ChatState = {
 const _reducer = createReducer(
   initialState,
   on(setChatList, (state,  payload: ChatCollection) =>  ({ ...state, list: payload.list})),
-  on(selectChat, (state, payload: Chat) =>  {
-    let  title = "";
-    if (!payload.public) {
-      const [host, user] = payload.members;
-      title = user.nickname;
-    } else {
-      title = payload.alias;
-    }
-    return {...state, current: payload , title };
-  }),
+  on(selectChat, (state, payload: Chat) =>  ({...state, current: payload })),
   on(appendChat, (state, payload: Chat) =>  {
     if (!state.list.find(item => item._id === payload._id)) {
       return {...state, list: [ ...state.list , payload]};

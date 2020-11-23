@@ -15,7 +15,7 @@ import { selectChat, setChatList } from "../../chat.actions";
   styleUrls: ['./chat-list.component.scss']
 })
 export class ChatListComponent implements OnInit {
-
+  staticUSer!: User;
   $user!: Observable<User>;
   $chat!: Observable<Chat|null>;
   $chats!: Observable<Chat[]>;
@@ -32,7 +32,11 @@ export class ChatListComponent implements OnInit {
 
   ngOnInit(): void {
     // Subscribe to user store changes
-    this.$user.pipe(tap(this.fetchUserChats.bind(this))).subscribe();
+    this.$user.pipe(tap(this.fetchUserChats.bind(this))).subscribe(user => {
+      if (user) {
+        this.staticUSer = user;
+      }
+    });
 
     // Subscribe to current the chat changes
     combineLatest([this.$chat, this.$chats])
@@ -72,7 +76,10 @@ export class ChatListComponent implements OnInit {
   }
 
   getPrivateAlias(chat: Chat) {
-    const [host, user] = chat.members;
-    return user.nickname;
+    const [first, second] = chat.members;
+    if(this.staticUSer._id != first._id) {
+      return first.nickname
+    }
+    return second.nickname;
   }
 }

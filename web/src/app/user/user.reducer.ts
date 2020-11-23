@@ -1,8 +1,10 @@
-import {Action, createReducer, on} from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { setUser, resetUser } from './user.actions';
 import { User } from "./user";
 
-export const initialState: User = {
+export interface UserState extends User {}
+
+export const initialState: UserState = {
   _id: null,
   nickname: '',
   createdAt: '',

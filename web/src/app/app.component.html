@@ -27,15 +27,6 @@
     <div class="message-container">
       <router-outlet></router-outlet>
     </div>
-    <div class="chat-input-field-container">
-      <mat-form-field appearance="outline">
-        <input matInput placeholder="Type a message">
-      </mat-form-field>
-      <div class="chat-actions-container">
-        <button mat-fab color="primary" mat-flat-button aria-label="Example icon button with a delete icon">
-          <mat-icon>send</mat-icon>
-        </button>
-      </div>
-    </div>
+    <app-chat-input></app-chat-input>
   </div>
 </mat-drawer-container>

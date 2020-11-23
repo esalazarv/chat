@@ -7,11 +7,12 @@ import { ChatService } from "./chat.service";
 import { MaterialModule } from "../material/material.module";
 import { WelcomeDialogComponent } from "./components/welcome-dialog/welcome-dialog.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ChatInputComponent } from './components/chat-input/chat-input.component';
 
 
 
 @NgModule({
-  declarations: [ChatListComponent, WelcomeDialogComponent],
+  declarations: [ChatListComponent, WelcomeDialogComponent, ChatInputComponent],
   imports: [
     CommonModule,
     AvatarModule,
@@ -23,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ChatService
   ],
   exports: [
-    ChatListComponent
+    ChatListComponent,
+    ChatInputComponent
   ],
 })
 export class ChatModule {

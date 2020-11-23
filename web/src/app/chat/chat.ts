@@ -1,5 +1,10 @@
 import { User } from "../user/user";
 
+
+export interface ChatCollection {
+  list: Chat[];
+}
+
 export interface Chat {
   _id?: string | null,
   alias: string;

@@ -10,7 +10,7 @@ const SocketBootstrap = (io, chatRepository, userRepository) => {
                 console.log(`user ${user._id} signed in successfully `);
 
                 // Search chats
-                chatRepository.search().then(chats => chats.forEach(chat => {
+                chatRepository.search({ user_id: user._id }).then(chats => chats.forEach(chat => {
                     console.log(`try join user ${user._id} to chat ${chat._id}`);
                     chatRepository.attachUser(chat._id, user._id);
                     socket.join(chat._id); // join to each chat using the id for the name

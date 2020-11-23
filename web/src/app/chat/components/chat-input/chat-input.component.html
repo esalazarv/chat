@@ -1,0 +1,10 @@
+<form [formGroup]="form" class="chat-input-field-container">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Type a message" (keyup.enter)="onEnter()" (keyup)="onTyping()" formControlName="message">
+    </mat-form-field>
+    <div class="chat-actions-container">
+      <button mat-fab color="primary" mat-flat-button aria-label="Example icon button with a delete icon">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+</form>

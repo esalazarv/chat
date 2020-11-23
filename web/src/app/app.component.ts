@@ -49,6 +49,8 @@ export class AppComponent implements OnInit {
   checkUser(user: User) {
     if (!user._id) {
       this.showWelcomeDialog();
+    } else {
+      this.socket.io.emit("chat.reconnect", { user });
     }
   }
 

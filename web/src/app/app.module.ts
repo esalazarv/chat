@@ -27,7 +27,7 @@ import store , { metaReducers }from "./app.store";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SocketModule.forRoot({ url: 'http://localhost:3000' }),
+    SocketModule.forRoot({ url: environment.socket_io }),
     ChatModule,
     StoreModule.forRoot(store, { metaReducers }),
     StoreDevtoolsModule.instrument({

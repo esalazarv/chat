@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { SocketIoService } from "../../../socket/socket-io.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../app.store";
-import { Observable } from "rxjs";
+import { combineLatest, Observable } from "rxjs";
 import { Chat } from "../../chat";
+import { User } from "../../../user/user";
 
 @Component({
   selector: 'app-chat-input',
@@ -13,6 +14,7 @@ import { Chat } from "../../chat";
 })
 export class ChatInputComponent implements OnInit {
 
+  $user!: Observable<User | null>;
   $chat!: Observable<Chat | null>;
   form!: FormGroup;
   shakeIt: boolean = false;
@@ -23,6 +25,7 @@ export class ChatInputComponent implements OnInit {
     private store: Store<AppState>
   ) {
     this.$chat = this.store.select(state => state.chat.current);
+    this.$user = this.store.select(state => state.user);
     this.form = this.formBuilder.group({
       message: ['', [Validators.required]],
     });
@@ -43,17 +46,18 @@ export class ChatInputComponent implements OnInit {
    * Send message to current room
    */
   send() {
-    this.$chat.subscribe(chat => {
-      if (chat) {
-        if (this.form.valid) {
-          const room = chat._id;
-          const message = this.form.get('message')?.value;
-          this.socket.io.emit("chat.message", { room, message });
-        } else {
-          this.shakeIt = true;
-          setTimeout(() => this.shakeIt = false, 1000);
-        }
+    combineLatest([this.$chat, this.$user]).subscribe(([chat, user]) => {
+      if (!this.form.valid) {
+        this.shakeIt = true;
+        setTimeout(() => this.shakeIt = false, 1000);
+        return;
       }
-    })
+      if (chat && user) {
+        const room = chat._id;
+        const message = this.form.get('message')?.value;
+        this.socket.io.emit("chat.message", { room, message, user: user._id });
+        this.form.reset();
+      }
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { User } from "../user/user";
+import { Message } from "./message";
 
 
 export interface ChatCollection {
@@ -10,7 +11,7 @@ export interface Chat {
   alias: string;
   public: boolean;
   members: User[],
-  messages: string[],
+  messages: Message[],
   name: string,
   createdAt: string,
   updatedAt: string,

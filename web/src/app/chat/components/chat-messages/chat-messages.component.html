@@ -1,5 +1,8 @@
 <section class="conversation">
-  <div class="message-wrapper" *ngFor="let message of ($chat | async)?.messages; index as i;">
+  <div class="message-wrapper"
+       *ngFor="let message of ($chat | async)?.messages; index as i;"
+       [ngClass]="{'sent': ($user | async)?._id == message.sender!._id }"
+  >
     <div class="message-avatar-container">
       <ngx-avatar mat-card-avatar [size]="40" [name]="message.sender!.nickname"></ngx-avatar>
     </div>

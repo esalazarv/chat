@@ -37,6 +37,14 @@ Build an up the docker container
 docker-compose up --build -d
 ```
 
+Run de base seeder, this will create a default chat room named `General`
+```bash
+docker-compose exec api npm run seeder:run
+```
+
+Wait a minutes and try join to the chat
+
+
 This will build a mongo db and up the express API listening on 3OOO port
 and the angular app listening on 4200 port
 
@@ -46,4 +54,7 @@ http://localhost:3000
 Host for SPA chat:
 http://localhost:3000
 
+## LIVE demo here
+This demo is running over a very small droplet, take it easy :)
 
+http://165.22.9.10:4200

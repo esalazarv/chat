@@ -5,6 +5,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule } from "@angular/common/http";
 import { StoreModule } from '@ngrx/store';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,10 @@ import store , { metaReducers }from "./app.store";
     SocketModule.forRoot({ url: 'http://localhost:3000' }),
     ChatModule,
     StoreModule.forRoot(store, { metaReducers }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

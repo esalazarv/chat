@@ -11,7 +11,7 @@
       <button mat-icon-button mat-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>{{ title }}</span>
+      <span>{{ ($chat | async)?.alias }}</span>
       <span class="spacer"></span>
       {{ ($user | async)?.nickname }}
       <button mat-icon-button [matMenuTriggerFor]="menu">

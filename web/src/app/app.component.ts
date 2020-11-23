@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { first, tap } from "rxjs/operators";
@@ -10,6 +10,7 @@ import { WelcomeDialogComponent } from "./chat/components/welcome-dialog/welcome
 import { resetUser } from "./user/user.actions";
 import { SocketIoService } from "./socket/socket-io.service";
 import { SocketMessage } from "./chat/socket-message";
+import { Chat } from "./chat/chat";
 
 @Component({
   selector: 'app-root',
@@ -19,26 +20,36 @@ import { SocketMessage } from "./chat/socket-message";
 export class AppComponent implements OnInit {
   title = 'chat';
   $user: Observable<User>;
+  $chat: Observable<Chat | null>;
 
   constructor(
     private store: Store<AppState>,
     private dialog: MatDialog,
     private socket: SocketIoService,
   ) {
-    this.$user = this.store.select((state) => state.user)
-      .pipe(tap(user => {
-        if (!user._id) {
-          this.showWelcomeDialog();
-        }
-      }));
+    this.$chat = this.store.select(state => state.chat.current);
+    this.$user = this.store.select((state) => state.user);
   }
 
   ngOnInit() {
+    // subscribe to user store changes
+    this.$user.pipe(tap(this.checkUser.bind(this))).subscribe();
+
     // subscribe for sign out responses
     this.socket.io.on("chat.sign-out.success", this.onSuccessSignOut.bind(this));
 
     // subscribe for sign out responses
     this.socket.io.on("chat.sign-out.error", this.onErrorSignOut.bind(this));
+  }
+
+  /**
+   * Check user, if not has a valid id ask for join
+   * @param user
+   */
+  checkUser(user: User) {
+    if (!user._id) {
+      this.showWelcomeDialog();
+    }
   }
 
   /**

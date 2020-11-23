@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from "../../chat.service";
 import { SocketIoService } from "../../../socket/socket-io.service";
-import { Observable } from "rxjs";
+import { combineLatest, Observable } from "rxjs";
 import { Chat } from "../../chat";
 import { User } from "../../../user/user";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../app.store";
 import { tap } from "rxjs/operators";
-import { setChatList } from "../../chat.actions";
+import { selectChat, setChatList } from "../../chat.actions";
 
 @Component({
   selector: 'app-chat-list',
@@ -33,6 +33,10 @@ export class ChatListComponent implements OnInit {
   ngOnInit(): void {
     // Subscribe to user store changes
     this.$user.pipe(tap(this.fetchUserChats.bind(this))).subscribe();
+
+    // Subscribe to current the chat changes
+    combineLatest([this.$chat, this.$chats])
+      .subscribe(([chat, list]) => this.checkCurrentChat(chat, list));
   }
 
   /**
@@ -50,5 +54,16 @@ export class ChatListComponent implements OnInit {
   onSuccessFetchList(list: Chat[]) {
     // Set list in store
     this.store.dispatch(setChatList({ list }));
+  }
+
+  /**
+   * Check if has one selected chat else select the first possible
+   * @param chat
+   */
+  checkCurrentChat(chat: Chat | null, list: Chat[]) {
+    const [first] = list;
+    if (!chat && first) {
+      this.store.dispatch(selectChat(first));
+    }
   }
 }

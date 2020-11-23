@@ -1,9 +1,21 @@
 @import '~@angular/material/theming';
 
-.cat-list {
+.chat-list {
   padding-top: _mat-density-prop-value($mat-toolbar-desktop-density-config, 0, height);
   @media ($mat-xsmall) {
     padding-top: _mat-density-prop-value($mat-toolbar-mobile-density-config, 0, height);
+  }
+  mat-card {
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 0;
+
+    &:hover {
+      background: #E8EAF6;
+    }
+    &.active {
+      border-right: solid 5px #C5CAE9;
+    }
   }
 }
 .chat-card {

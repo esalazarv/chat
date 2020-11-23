@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from "@angular/material/card";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatListModule } from "@angular/material/list";
+import { MatRippleModule } from "@angular/material/core";
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { MatMenuModule } from "@angular/material/menu";
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
+    MatListModule,
     MatMenuModule,
+    MatRippleModule,
     MatSidenavModule,
     MatToolbarModule,
   ],

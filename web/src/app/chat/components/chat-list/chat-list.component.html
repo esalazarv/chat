@@ -1,5 +1,10 @@
-<div class="cat-list">
-  <mat-card *ngFor="let item of $chats | async; index as i;" class="mat-card-flat chat-card">
+<div class="chat-list">
+  <mat-card
+    matRipple
+    class="mat-card-flat chat-card" *ngFor="let item of $chats | async; index as i;"
+    (click)="selectChat(item)"
+    [ngClass]="{'active': ($chat | async)?._id == item._id }"
+  >
     <mat-card-header>
       <ngx-avatar mat-card-avatar [size]="40" [name]="item.alias"></ngx-avatar>
       <mat-card-title>{{ item.alias }}</mat-card-title>

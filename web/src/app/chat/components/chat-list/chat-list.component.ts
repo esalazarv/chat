@@ -63,7 +63,11 @@ export class ChatListComponent implements OnInit {
   checkCurrentChat(chat: Chat | null, list: Chat[]) {
     const [first] = list;
     if (!chat && first) {
-      this.store.dispatch(selectChat(first));
+      this.selectChat(first);
     }
+  }
+
+  selectChat(chat: Chat) {
+    this.store.dispatch(selectChat(chat));
   }
 }

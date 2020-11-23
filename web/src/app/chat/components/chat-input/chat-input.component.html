@@ -1,5 +1,5 @@
 <form [formGroup]="form" class="chat-input-field-container">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" [ngClass]="{'shake': shakeIt}">
       <input
         matInput
         placeholder="Type a message" (keyup.enter)="onEnter()" (keyup)="onTyping()"
@@ -8,7 +8,7 @@
       >
     </mat-form-field>
     <div class="chat-actions-container">
-      <button mat-fab color="primary" mat-flat-button aria-label="Example icon button with a delete icon">
+      <button mat-fab color="primary" (click)="send()">
         <mat-icon>send</mat-icon>
       </button>
     </div>

@@ -25,6 +25,7 @@ export class ChatMessagesComponent implements OnInit {
    */
   handleIncomingMessage(payload: SocketMessage<any>) {
     const { room, message } = payload;
+    // update chat messages
     this.store.dispatch(appendMessage({ chatId: room, message }))
   }
 }

@@ -6,6 +6,7 @@ import { AppState } from "../../../app.store";
 import { combineLatest, Observable } from "rxjs";
 import { Chat } from "../../chat";
 import { User } from "../../../user/user";
+import { Message } from "../../message";
 
 @Component({
   selector: 'app-chat-input',
@@ -54,7 +55,8 @@ export class ChatInputComponent implements OnInit {
       }
       if (chat && user) {
         const room = chat._id;
-        const message = this.form.get('message')?.value;
+        const content = this.form.get('message')?.value;
+        const message: Message = { chat: chat._id, content, sender: user._id };
         this.socket.io.emit("chat.message", { room, message, user: user._id });
         this.form.reset();
       }

@@ -54,6 +54,12 @@ const ChatRepository = () => {
             chat.members.pull({ _id: userId });
             return chat.save();
         },
+
+        async attachMessage(chatId, messageId) {
+            const chat = await this.find(chatId);
+            chat.messages.addToSet(messageId);
+            return chat.save();
+        },
     }
 }
 
